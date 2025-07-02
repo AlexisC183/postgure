@@ -1,4 +1,34 @@
 (ns com.github.alexisc183.postgure.core
+  "Defines functions that perform CRUD operations on PostgreSQL relational databases.
+   
+  COMMON ARGUMENTS
+   
+  All the functions make use of an instance of `com.github.alexisc183.postgure.DataContext`
+  to retrieve all the necessary database metadata and manage auto-closeable objects
+  efficiently. A single instance can be reused across function calls. For the API
+  documentation of `com.github.alexisc183.postgure.DataContext` please see:
+    _
+  
+  Also all the functions ask for a target table within a database schema, being the latter
+  commonly 'public' if no schema was specified on table creation in PostgreSQL.
+
+  All the functions except `from` require a collection as the fourth argument, this to let
+  the use of the `->>` macro and perform the same operation over multiple rows at once
+  without the need of invoking these functions multiple times.
+   
+  DATA IS PROCESSED WITH CLOJURE'S BUILT-INS
+
+  This means three things:
+  1. Table columns are converted from PostgreSQL types to Java types.
+  2. Table rows are mapped to Clojure maps, with keywords as keys that exactly match table
+     column names.
+  3. Rows are within a Clojure collection that can be operated with functions like `filter`
+     and `map`. Data is brought into memory only when it is actually needed.
+   
+  JAVA TIME API IS PREFERRED OVER LEGACY
+  
+  PostgreSQL time-related types are converted to their `java.time`-equivalent types
+  because these support more operations than the ones that extend `java.util.Date`."
   (:require [clojure.string :as str])
   (:import [com.github.alexisc183.postgure DataContext]
            [java.sql SQLException]
@@ -19,6 +49,9 @@
    (when (not (coll? coll)) (throw (IllegalArgumentException. "coll must be a collection")))))
 
 (defn delete-from
+  "Takes a `com.github.alexisc183.postgure.DataContext` as `ctx` and deletes all the rows
+  included in `coll` from the provided `schema` and `table` strings. This is an eager
+  operation and returns nil."
   [ctx schema table coll]
   (letfn [(pkey-names
             []
@@ -78,6 +111,8 @@
         (throw (SQLException. "The provided table needs at least one column as primary key as criterion to delete rows"))))))
 
 (defn from
+  "Takes a `com.github.alexisc183.postgure.DataContext` as `ctx` and returns a lazy sequence
+  containing the rows from the provided `schema` and `table` strings."
   [ctx schema table]
   (letfn [(get-cell
             [rs meta col-ordinal]
@@ -107,6 +142,9 @@
          (map get-row))))
 
 (defn insert-into
+  "Takes a `com.github.alexisc183.postgure.DataContext` as `ctx` and inserts all the rows
+  included in `coll` into the provided `schema` and `table` strings. This is an eager
+  operation and returns nil."
   [ctx schema table coll]
   (letfn [(col-names-and-types
             []
@@ -182,6 +220,8 @@
                     (recur i (inc j) (inc param-ordinal)))))))))
 
 (defn do-update
+  "Takes a `com.github.alexisc183.postgure.DataContext` as `ctx` and updates `schema`.`table`
+  (strings) according to the data of `coll`. This is an eager operation and returns nil."
   [ctx schema table coll]
   (letfn [(columns-pkeys
             []
