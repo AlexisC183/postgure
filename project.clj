@@ -6,4 +6,5 @@
             :url "https://www.eclipse.org/legal/epl-2.0/"}
   :dependencies [[org.clojure/clojure "1.12.1"]]
   :java-source-paths ["src/com/github/alexisc183/postgure"]
+  :plugins [[lein-codox "0.10.8"]]
   :repl-options {:init-ns com.github.alexisc183.postgure.core})

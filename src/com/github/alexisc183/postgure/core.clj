@@ -7,7 +7,7 @@
   to retrieve all the necessary database metadata and manage auto-closeable objects
   efficiently. A single instance can be reused across function calls. For the API
   documentation of `com.github.alexisc183.postgure.DataContext` please see:
-    _
+    https://alexisc183.github.io/postgure/java/com/github/alexisc183/postgure/DataContext.html
   
   Also all the functions ask for a target table within a database schema, being the latter
   commonly 'public' if no schema was specified on table creation in PostgreSQL.
