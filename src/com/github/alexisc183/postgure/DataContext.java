@@ -59,8 +59,9 @@ public class DataContext implements AutoCloseable {
 
 	/**
 	 * Returns a result set of column metadata and a result set of primary key metadata from the specified schema and table, in a Clojure vector.
+	 * <p>
+	 * Note: This API is intended for internal use.
 	 * 
-	 * @apiNote This API is intended for internal use.
 	 * @param schema the target schema
 	 * @param table the target table
 	 * @return a Clojure vector with the result sets
@@ -85,8 +86,9 @@ public class DataContext implements AutoCloseable {
 
 	/**
 	 * Returns a Clojure vector of <code>ResultSet</code>, <code>ResultSetMetaData</code> and <code>core$range</code> from the specified schema and table.
+	 * <p>
+	 * Note: This API is intended for internal use.
 	 * 
-	 * @apiNote This API is intended for internal use.
 	 * @param schema the target schema
 	 * @param table the target table
 	 * @return a Clojure vector used as a seed to retrieve all the rows of a table
@@ -121,8 +123,9 @@ public class DataContext implements AutoCloseable {
 
 	/**
 	 * Returns a unique statement.
+	 * <p>
+	 * Note: This API is intended for internal use.
 	 * 
-	 * @apiNote This API is intended for internal use.
 	 * @return the statement
 	 * @throws SQLException if a database error occurs
 	 */
@@ -135,8 +138,9 @@ public class DataContext implements AutoCloseable {
 
 	/**
 	 * Creates a new prepared statement.
+	 * <p>
+	 * Note: This API is intended for internal use.
 	 * 
-	 * @apiNote This API is intended for internal use.
 	 * @param sql a SQL statement string that may contain ? symbols as placeholders in which to set values later
 	 * @return a prepared statement
 	 * @throws SQLException if a database error occurs
