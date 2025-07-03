@@ -19,7 +19,7 @@ This project is NOT a good fit for you if:
 
 ### project.clj
 
-```
+```clj
   :dependencies [[com.github.alexisc183/postgure "1.0.0"] ; The ORM.
                  [com.zaxxer/HikariCP "6.3.0"] ; Third-party lib to create data sources.
                  [org.clojure/clojure "1.12.1"]
@@ -48,7 +48,7 @@ This project is NOT a good fit for you if:
 
 ### core.clj
 
-```
+```clj
 (ns postgure-usage.core
   (:require [com.github.alexisc183.postgure.core :as pg])
   (:import [com.github.alexisc183.postgure DataContext]
@@ -58,7 +58,7 @@ This project is NOT a good fit for you if:
 
 #### Simple program to print all the rows of the person table
 
-```
+```clj
 (defn -main
   [& _]
   (let [ds (doto (HikariDataSource.)
@@ -81,7 +81,7 @@ Output:
 
 #### Simple program to print people of age 35 or older
 
-```
+```clj
 (defn -main
   [& _]
   (let [ds (doto (HikariDataSource.)
@@ -103,7 +103,7 @@ Output:
 
 #### Simple program that inserts a new person
 
-```
+```clj
 (defn -main
   [& _]
   (let [ds (doto (HikariDataSource.)
@@ -120,7 +120,7 @@ Notice that an ID was not provided; serial columns are automatically inserted. E
 
 #### Simple program to delete two people: one with ID 2 and another with ID 5
 
-```
+```clj
 (defn -main
   [& _]
   (let [ds (doto (HikariDataSource.)
@@ -136,7 +136,7 @@ At database level, it is mandatory for the target table to have a primary key co
 
 #### Simple program to update the employee with ID 3
 
-```
+```clj
 (defn -main
   [& _]
   (let [ds (doto (HikariDataSource.)
@@ -153,7 +153,7 @@ At database level, a primary key constraint and at least one non-primary key col
 
 #### Program to increment by 1000 the employee salaries
 
-```
+```clj
 (defn -main
   [& _]
   (let [ds (doto (HikariDataSource.)
@@ -168,7 +168,7 @@ At database level, a primary key constraint and at least one non-primary key col
 
 #### Program to print all the people with their employee information
 
-```
+```clj
 (defn -main
   [& _]
   (let [ds (doto (HikariDataSource.)
