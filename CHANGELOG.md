@@ -4,5 +4,3 @@ All notable changes to this project will be documented in this file. This change
 ## [1.0.1] - 2025-07-02
 ### Added
 - Usage examples at README.
-
-[1.0.1]: https://github.com/AlexisC183/postgure/compare/1.0.0...HEAD

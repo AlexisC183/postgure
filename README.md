@@ -28,7 +28,7 @@ Clojure ORM for PostgreSQL.
 #### employee
 
 | id | department | salary   |
-|----------------------------|
+|----|------------|----------|
 | 1  | CEO        | 40000.00 |
 | 3  | Management | 37010.66 |
 | 4  | CIO        | 37500.50 |
