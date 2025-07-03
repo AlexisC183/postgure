@@ -2,6 +2,19 @@
 
 Clojure ORM for PostgreSQL.
 
+## Motivation
+
+This project was developed to leverage Clojure's built-ins on the data manipulation of PostgreSQL relations. It got inspired by .NET's Entity Framework Core and its way of querying data using Language Integrated Query (LINQ). Postgure is basic and does not require any SQL knowledge.
+
+This project is a good fit for you if:
+- You target PostgreSQL databases
+- You want to use Clojure's built-ins such as `->>`, `filter` and `clojure.set/join`
+- You are able to provide `javax.sql.DataSource` instances to the ORM
+
+This project is NOT a good fit for you if:
+- You want to execute raw SQL. For this please refer to [next.jdbc](https://github.com/seancorfield/next-jdbc).
+- You want to use Clojure's syntax to generate SQL strings. For this please refer to [Honey SQL](https://github.com/seancorfield/honeysql).
+
 ## Usage examples in a Leiningen app project
 
 ### project.clj

@@ -16,7 +16,7 @@
   the use of the `->>` macro and perform the same operation over multiple rows at once
   without the need of invoking these functions multiple times.
    
-  DATA IS PROCESSED WITH CLOJURE'S BUILT-INS
+  DATA IS MANIPULATED WITH CLOJURE'S BUILT-INS
 
   This means three things:
   1. Table columns are converted from PostgreSQL types to Java types.
