@@ -1,4 +1,4 @@
-(defproject postgure "1.0.2"
+(defproject postgure "1.0.3"
   :aot :all
   :description "Clojure ORM for PostgreSQL"
   :url "https://github.com/AlexisC183/postgure"
