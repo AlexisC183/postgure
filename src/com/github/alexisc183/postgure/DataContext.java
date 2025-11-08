@@ -1,6 +1,6 @@
 package com.github.alexisc183.postgure;
 
-import clojure.core$range;
+import clojure.core$keyword;
 import clojure.core$vector;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -85,7 +85,7 @@ public class DataContext implements AutoCloseable {
 	}
 
 	/**
-	 * Returns a Clojure vector of <code>ResultSet</code>, <code>ResultSetMetaData</code> and <code>core$range</code> from the specified schema and table.
+	 * Returns a Clojure vector of <code>ResultSet</code> and <code>Object[]</code> from the specified schema and table.
 	 * <p>
 	 * Note: This API is intended for internal use.
 	 * 
@@ -113,8 +113,18 @@ public class DataContext implements AutoCloseable {
 		resultSets.add(resultSet);
 
 		ResultSetMetaData metadata = resultSet.getMetaData();
-		Object columnOrdinals = core$range.invokeStatic(1, metadata.getColumnCount() + 1);
-		Object seed = core$vector.invokeStatic(resultSet, metadata, columnOrdinals);
+		Object[] keywordNameEntries = new Object[metadata.getColumnCount()];
+
+		for (int i = 0; i < keywordNameEntries.length; i++) {
+			String name = metadata.getColumnName(i + 1);
+
+			keywordNameEntries[i] = core$vector.invokeStatic(
+				core$keyword.invokeStatic(name),
+				name
+			);
+		}
+
+		Object seed = core$vector.invokeStatic(resultSet, keywordNameEntries);
 
 		seeds.put(entry, seed);
 
