@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file. This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
+## 1.0.4 - 2025-11-07
+### Fixed
+- Optimized `from`
+
 ## 1.0.3 - 2025-07-03
 ### Added
 - Pretty Clojure code at README.
