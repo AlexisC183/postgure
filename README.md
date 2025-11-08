@@ -20,9 +20,9 @@ This project is NOT a good fit for you if:
 ### project.clj
 
 ```clj
-  :dependencies [[com.github.alexisc183/postgure "1.0.0"] ; The ORM.
+  :dependencies [[com.github.alexisc183/postgure "1.0.4"] ; The ORM.
                  [com.zaxxer/HikariCP "6.3.0"] ; Third-party lib to create data sources.
-                 [org.clojure/clojure "1.12.1"]
+                 [org.clojure/clojure "1.12.3"]
                  [org.postgresql/postgresql "42.7.7"] ; Required JDBC driver for the third-party lib.
                  ]
 ```

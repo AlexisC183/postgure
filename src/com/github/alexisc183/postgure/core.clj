@@ -23,16 +23,9 @@
   2. Table rows are mapped to Clojure maps, with keywords as keys that exactly match table
      column names.
   3. Rows are within a Clojure collection that can be operated with functions like `filter`
-     and `map`. Data is brought into memory only when it is actually needed.
-   
-  JAVA TIME API IS PREFERRED OVER LEGACY
-  
-  PostgreSQL time-related types are converted to their `java.time`-equivalent types
-  because these support more operations than the ones that extend `java.util.Date`."
-  (:require [clojure.string :as str])
+     and `map`. Data is brought into memory only when it is actually needed."
   (:import [com.github.alexisc183.postgure DataContext]
-           [java.sql SQLException]
-           [java.time LocalDate LocalDateTime LocalTime]))
+           [java.sql SQLException]))
 
 (defn- enquote
   [ctx s]
@@ -115,29 +108,19 @@
   containing the rows from the provided `schema` and `table` strings."
   [ctx schema table]
   (letfn [(get-cell
-            [rs meta col-ordinal]
-            [(keyword (.getColumnName meta col-ordinal))
-             (case (.getColumnTypeName meta col-ordinal)
-               "date" (-> rs
-                          (.getString col-ordinal)
-                          (LocalDate/parse))
-               "time" (-> rs
-                          (.getString col-ordinal)
-                          (LocalTime/parse))
-               "timestamp" (-> rs
-                               (.getString col-ordinal)
-                               (str/replace \space \T)
-                               (LocalDateTime/parse))
-               (.getObject rs col-ordinal))])
+            [rs [col-keyword col-name]]
+            [col-keyword
+             (.getObject rs col-name)])
           (get-row
             [lazy-seed]
-            (let [[rs meta col-ordinals] (lazy-seed)]
-              (->> col-ordinals
-                   (map #(get-cell rs meta %)) ; LazySeq of [k v]s.
-                   (reduce (fn [m [k v]] (assoc m k v)) {}))))]
+            (let [[rs key-name-entries] (lazy-seed)]
+              (->> key-name-entries
+                   (map #(get-cell rs %)) ; LazySeq of [k v]s.
+                   (reduce (fn [m [k v]] (assoc! m k v)) (transient {}))
+                   persistent!)))]
     (throw-if-bad-args ctx schema table)
     (->> (repeat #(.singletonSeed ctx schema table)) ; Infinite lazy seq of lazy seed.
-         (take-while #(let [[rs _ _] (%)]
+         (take-while #(let [[rs _] (%)]
                         (.next rs))) ; Finite LazySeq of lazy seed.
          (map get-row))))
 
